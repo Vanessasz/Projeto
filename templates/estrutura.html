@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container">
+  <form method="POST" action="">
+  	 {{ form.hidden_tag() }}
+  	 <fieldset class="form-group form-inline ">
+  		<div class="row">
+  	
+
+ <div class="form col-sm-2 borda">
+      Descrição
+
+      {{ form.descricao(class="form-control form-control-sm") }}
+    </div>
+    <div class="col-sm-2 borda">
+      Quantidade
+    
+      {{ form.quantidade(class="form-control form-control-sm") }}
+
+    </div>
+    <div class="col-sm-2 borda">
+      Valor R$
+    
+      {{ form.valor(class="form-control form-control-sm") }}
+    </div>
+    <div class="col-sm-2 borda">
+    	Dia
+    
+    	{{ form.dia(class="form-control form-control-sm") }}
+    </div>
+    <div class="col-sm-2 borda">
+    	Nome da loja
+    
+    	{{ form.nomeloja(class="form-control form-control-sm") }}
+    </div>
+    <div class="col-sm-2 borda">
+   {{ form.enviar(class="btn btn-sucess btn-block") }}
+
+    </div>
+</fieldset>
+	</form>
+	</div>
+</div>
+	
+
+
+
+{% endblock content %}
+
+  
