@@ -26,6 +26,7 @@ class loja(db.Model):
 	cnpj = db.Column(db.String(30), nullable=False)
 	email = db.Column(db.String(50), unique=True)
 	senha = db.Column(db.String(30), nullable=False)
+	
 
 	def __init__(self, nome, telefone, cnpj, email, senha):
 		self.nome = nome

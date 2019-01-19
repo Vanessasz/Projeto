@@ -4,10 +4,21 @@ from flask_login import current_user, AnonymousUserMixin
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, FloatField, DateField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 
-class FormHome(FlaskForm):
+class FormSistema(FlaskForm):
     descricao = StringField('Descrição',validators=[DataRequired()])
     quantidade = FloatField('Quantidade', validators=[DataRequired()])
     valor = FloatField('Quantidade', validators=[DataRequired()])
     dia = DateField('Data', validators=[DataRequired()])
     nomeloja = StringField('Nome da Loja', validators=[DataRequired()])
     enviar = SubmitField('Adicionar')
+
+
+
+class FormRegistro(FlaskForm):
+	nome = StringField('Digite o nome da sua loja',validators=[DataRequired()])
+	telefone = StringField('Digite o telefone',validators=[DataRequired()])
+	cnpj = StringField('Digite o CNPJ',validators=[DataRequired()])
+	email = StringField('Digite o email',validators=[DataRequired(),Email()])
+	senha = PasswordField('Digite sua senha'),validators=[DataRequired()]
+	confirma_senha = PasswordField('Confirme a senha',validators=[DataRequired(), EqualTo('senha')])
+	enviar = SubmitField('Registrar')
