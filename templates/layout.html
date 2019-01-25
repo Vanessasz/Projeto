@@ -8,24 +8,42 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../static/css/estrutura.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/meucss.css">
+
 
 
 <title>Jóia Lar.</title>
 </head>
 <body>
 
-<div class=" cadastre-se p-1 bg-secondary text-white">Cadastre-se Login.</div>
-<div class=" links p-4 bg-dark text-white">
- <a href="{{ url_for('home') }}">Página Inicial</a>
- <a href="{{ url_for('sistema') }}">Cadastro de Jóias</a>
+<div class=" cadastre-se p-1 bg-rosa text-white">Cadastre-se Login.</div>
+
+<nav class="navbar navbar-expand-lg navbar-dark links p-4 bg-dark">
+ 
+   
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#textoNavbar" aria-controls="textoNavbar" aria-expanded="false" aria-label="Alterna navegação">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="textoNavbar">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('home') }}" > Página Inicial <span class="sr-only">(Página atual)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('sistema') }}">Cadastro de Jóias</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">KKKK</a>
+      </li>
+    </ul>
+    </span>
+  </div>
+</nav>
 </div>
 
 
 
 
 
-</div>
 {% block content %}
 
 {% endblock content %}

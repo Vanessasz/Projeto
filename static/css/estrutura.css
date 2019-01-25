@@ -15,6 +15,11 @@ font-size: 16px
 
 }
 
+.bg-rosa{
+   background-color: #f8cccd;
+}
+
+
 .btn-xl {
   padding: 1.25rem 2.5rem;
 }
