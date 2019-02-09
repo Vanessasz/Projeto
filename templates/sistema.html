@@ -8,7 +8,7 @@
   <form method="POST" action="">
   	 {{ form.hidden_tag() }}
   	 <fieldset class="form-group form-inline ">
-  		<div class="form-row">
+  		<div class="row">
   	
 
  <div class="form col-sm-2">
@@ -45,9 +45,28 @@
 	</form>
 	</div>
 </div>
-	
+<div class="container">
+  <form method="POST" action="">
+<table class="table table-sm table">
+  <tbody>
+    <tr>
+      <th class="table-bordered" scope="row">{{ query._id }}</th>
+      <td class="table-bordered">{{ query.descricao }}</td>
+      <td class="table-bordered">{{ query.quantidade }}</td>
+      <td class="table-bordered">{{ query.valor }}</td>
+      <td class="table-bordered">{{ query.dia }}</td>
+      <td class="table-bordered">{{ query.nomeloja }}</td> 
+      <td class="btn-group btn-outline-success btn-sm">Editar</td>
+      <td class="btn btn-outline-danger btn-sm">Deletar</td>
+  
+      </tr>
+ 
 
+  
+  </tbody>
+</table>
 
+</div>
 
 {% endblock content %}
 

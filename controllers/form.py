@@ -11,7 +11,7 @@ class FormSistema(FlaskForm):
     dia = DateField('Data', validators=[DataRequired()],  format='%d-%m-%Y')
     nomeloja = StringField('Nome da Loja', validators=[DataRequired()])
     enviar = SubmitField('Adicionar')
-
+    
 
 
 class FormRegistro(FlaskForm):
@@ -22,3 +22,6 @@ class FormRegistro(FlaskForm):
 	senha = PasswordField('Digite sua senha',validators=[DataRequired()])
 	confirma_senha = PasswordField('Confirme a senha',validators=[DataRequired(),EqualTo('senha')])
 	enviar = SubmitField('Registrar')
+
+
+	

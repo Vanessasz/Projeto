@@ -47,5 +47,6 @@ class desc(db.Model):
 	nomeloja = db.Column(db.String, nullable=False)
 	#lojas_id = db.Column(db.Integer, db.ForeignKey('descricoes.id'), nullable=False)
 
+
 	def __repr__(self):
 		return f"desc('{self.descricao}', '{self.quantidade}', '{self.valor}',  '{self.dia}',  '{self.nomeloja}')"
