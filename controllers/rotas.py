@@ -1,7 +1,7 @@
 from Projeto import app, db #Aqui estou fazendo o importe da instância que eu criei.
 
 from Projeto.models import database
-from Projeto.models.database import desc
+from Projeto.models.database import desc, loja
 
 from flask import render_template, url_for, flash, redirect, request, abort, send_file, Markup
 from flask_sqlalchemy import SQLAlchemy
@@ -23,7 +23,7 @@ def sistema():
 	
 	form = FormSistema()
 	""" Instanciei meu formulário para poder usar """
-	valores = 0s
+	valores = 0
 
 	query = desc.query.filter_by(_id=2).first()
 
@@ -54,7 +54,14 @@ def registro():
 
 	form = FormRegistro()
 
+	
+	if form.validate_on_submit():
+		valores = loja(nome=form.nome.data, telefone=form.telefone.data, cnpj=form.cnpj.data, 
+			email=form.email.data, senha=form.senha.data)
 
+		db.session.add(valores)
+
+		db.session.commit()
 
 	return render_template('registro.html', form=form)
 

@@ -2,7 +2,7 @@ from Projeto import app, db
 from flask_login import UserMixin
 
 
-'''
+
 class Administrador(db.Model):
 	__tablename__ = "admin"
 
@@ -35,7 +35,7 @@ class loja(db.Model):
 		self.email = email
 		self.senha = senha
 
-'''
+
 class desc(db.Model):
 	__tablename__= "descricoes"
 
@@ -45,8 +45,8 @@ class desc(db.Model):
 	valor = db.Column(db.Float, nullable=False)
 	dia = db.Column(db.Date, nullable=False) 
 	nomeloja = db.Column(db.String, nullable=False)
-	#lojas_id = db.Column(db.Integer, db.ForeignKey('descricoes.id'), nullable=False)
+	descricoes_id = db.Column(db.Integer, db.ForeignKey('lojas._id'), nullable=False)
 
 
 	def __repr__(self):
-		return f"desc('{self.descricao}', '{self.quantidade}', '{self.valor}',  '{self.dia}',  '{self.nomeloja}')"
+		return f"desc('{self.descricao}', '{self.quantidade}', '{self.valor}',  '{self.dia}',  '{self.nomeloja}' ,  '{self.descricoes_id}')"
