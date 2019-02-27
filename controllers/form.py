@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from flask_login import current_user, AnonymousUserMixin
-from wtforms import StringField, PasswordField, SubmitField, FloatField, DateField, IntegerField
+from flask_login import current_user, AnonymousUserMixin, LoginManager, login_user
+from wtforms import StringField, BooleanField, PasswordField, SubmitField, FloatField, DateField, IntegerField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 
 
@@ -26,4 +26,8 @@ class FormRegistro(FlaskForm):
 	enviar = SubmitField('Salvar')
 
 
-	
+class FormLogin(FlaskForm):
+	email = StringField('Digite o email',validators=[DataRequired(),Email()])
+	senha = PasswordField('Digite sua senha',validators=[DataRequired()])
+	lembrar_me = BooleanField('Lembrar-me')	
+	enviar = SubmitField('Salvar')

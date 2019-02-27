@@ -1,7 +1,11 @@
-from Projeto import app, db
+from Projeto import app, db, login_manager
 from flask_login import UserMixin
 
+from flask_login import login_user
 
+@login_manager.user_loader
+def load_user(_id):
+	return loja.query.get(int(_id))
 
 class Administrador(db.Model):
 	__tablename__ = "admin"
@@ -17,7 +21,7 @@ class Administrador(db.Model):
 		self.email = email
 		self.senha = senha
 
-class loja(db.Model):
+class loja(db.Model, UserMixin):
 	__tablename__= "lojas"
 
 	_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -27,8 +31,22 @@ class loja(db.Model):
 	email = db.Column(db.String, unique=True)
 	senha = db.Column(db.String, nullable=False)
 	
+	@property
+	def is_authenticated(self):
+		return True
 
-	def __init__(self, nome, telefone, cnpj, email, senha):
+	@property
+	def is_active(self):
+		return True
+
+	@property
+	def is_anonymous(self):
+		return False 
+
+	def get_id(self):
+		return str(self._id)
+	
+	
 		self.nome = nome
 		self.telefone = telefone
 		self.cnpj = cnpj

@@ -6,7 +6,9 @@ from Projeto.models.database import desc, loja
 from flask import render_template, url_for, flash, redirect, request, abort, send_file, Markup
 from flask_sqlalchemy import SQLAlchemy
 
-from Projeto.controllers.form import FormSistema, FormRegistro
+from flask_login import login_user, login_manager
+
+from Projeto.controllers.form import FormSistema, FormRegistro, FormLogin
 
 @app.route("/")
 @app.route("/home")
@@ -69,7 +71,22 @@ def registro():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
 
-	return render_template('login.html')
+	form = FormLogin()
+	
+	if form.validate_on_submit():
+		query = loja.query.filter_by(email=form.email.data).first()
+		if query and query.senha == form.senha.data:
+			login_user(query)
+			flash("Login efetuado com sucesso.")
+	
+			return redirect(url_for('sistema'))
+		else:
+			flash("Login inválido.")
+			
+	else: 
+		print(form.errors)
+
+	return render_template('login.html', form=form)
 
 
 
