@@ -6,7 +6,7 @@ from Projeto.models.database import desc, loja
 from flask import render_template, url_for, flash, redirect, request, abort, send_file, Markup
 from flask_sqlalchemy import SQLAlchemy
 
-from flask_login import login_user, login_manager
+from flask_login import login_user, login_manager, current_user, logout_user
 
 from Projeto.controllers.form import FormSistema, FormRegistro, FormLogin
 
@@ -70,23 +70,26 @@ def registro():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+    
+    form = FormLogin()
+    
+    if current_user.is_authenticated:
+        
+        return redirect(url_for('sistema'))
+    
+    if form.validate_on_submit():
+        query = loja.query.filter_by(email=form.email.data).first()
+        if query and query.senha == form.senha.data:
+            login_user(query)
+            flash("Login efetuado com sucesso.")
+            return redirect(url_for('sistema'))
+        else:
+            print(form.errors)          
+            flash("Login inválido.", "text-danger")
+    return render_template('login.html', title='login', form=form)
 
-	form = FormLogin()
-	
-	if form.validate_on_submit():
-		query = loja.query.filter_by(email=form.email.data).first()
-		if query and query.senha == form.senha.data:
-			login_user(query)
-			flash("Login efetuado com sucesso.")
-	
-			return redirect(url_for('sistema'))
-		else:
-			flash("Login inválido.")
-			
-	else: 
-		print(form.errors)
 
-	return render_template('login.html', form=form)
-
-
-
+@app.route("/sair")
+def sair():
+    logout_user()
+    return redirect(url_for('home'))
