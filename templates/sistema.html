@@ -1,75 +1,186 @@
+ {% extends "layout.html" %} {% block content %}
 
-{% extends "layout.html" %}
+<div class="container-fluid">
 
-{% block content %}
 
-	
-<div class="container">
-  <form method="POST" action="">
-  	 {{ form.hidden_tag() }}
-  	 <fieldset class="form-group form-inline ">
-  		<div class="row">
-  	
+    <h4 class="text-center">Adicionar semi jóias</h4>
+    <br>
 
- <div class="form col-sm-2">
-      Descrição
+<table class="container-fluid">
+    <thead>
+        <tr>
+            <th class="text-center">
+                Descrição
+            </th>
+            <th class="text-center">
+                Quantidade
+            </th>
+            <th class="text-center">
+                Valor
+            </th>
+            <th class="text-center">
+                Dia
+            </th>
+            <th class="text-center">
+                Nome da Loja
+            </th>
+        </tr>
+    </thead>
 
-      {{ form.descricao(class="form-control form-control-sm") }}
-    </div>
-    <div class="col-sm-2">
-      Quantidade
-    
-      {{ form.quantidade(class="form-control form-control-sm") }}
+    <tbody>
 
-    </div>
-    <div class="col-sm-2">
-      Valor R$
-    
-      {{ form.valor(class="form-control form-control-sm") }}
-    </div>
-    <div class="col-sm-2">
-    	Dia
-    
-    	{{ form.dia(class="form-control form-control-sm") }}
-    </div>
-    <div class="col-sm-2">
-    	Nome da loja
-    
-    	{{ form.nomeloja(class="form-control form-control-sm") }}
+        <form method="POST" action="">
+            {{ formulario.hidden_tag() }}
+            <div class="row">
 
-      
-    </div>
-    <div class="col-sm-2">
-   {{ form.enviar(class="btn btn-sucess btn-block") }}
+                <tr>
+                    <td>
+                        <div class="form col-sm">
+                            {{ formulario.descricao(class="form-control form-control-sm") }}
+                        </div>
+                    </td>
 
-    </div>
-</fieldset>
-	</form>
-	</div>
-</div>
-<div class="container">
-  <form method="POST" action="">
-<table class="table table-sm table">
-  <tbody>
-    <tr>
-      <th class="table-bordered" scope="row">{{ query._id }}</th>
-      <td class="table-bordered">{{ query.descricao }}</td>
-      <td class="table-bordered">{{ query.quantidade }}</td>
-      <td class="table-bordered">{{ query.valor }}</td>
-      <td class="table-bordered">{{ query.dia }}</td>
-      <td class="table-bordered">{{ query.nomeloja }}</td> 
-      <td class="btn-group btn-outline-success btn-sm">Editar</td>
-      <td class="btn btn-outline-danger btn-sm">Deletar</td>
-  
-      </tr>
- 
+                    <td>
+                        <div class="form col-sm">
+                            {{ formulario.quantidade(class="form-control form-control-sm") }}
+                        </div>
+                    </td>
+                    <div class="form col-sm">
+                        <td>
+                            {{ formulario.valor(class="form-control form-control-sm") }}
+                        </td>
+                    </div>
 
-  
-  </tbody>
+                    <td>
+                        <div class="form col-sm">
+                            {{ formulario.dia(class="form-control form-control-sm") }}
+
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form col-sm">
+                            {{ formulario.nomeloja(class="form-control form-control-sm") }}
+
+                        </div>
+                    </td>
+
+                    <td>
+                        {{ formulario.enviar(class="btn btn-success btn-sm m-2") }}
+
+                    </td>
+                    <td> <a class="btn btn-danger btn-sm m-2" href="{{ url_for('home') }}">Cancelar</a>
+                    </td>
+                </tr>
+            </div>
+        
+
+
+        </form>
+
+    </tbody>
 </table>
 
+
+
+<br>
+<div class="row">
+    <div class="col-md-12">
+        <br>
+        <h4 class="page-header text-center">Visualizar estoque semi jóias</h4> </br>
+
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <td> <b> ID </td> </b>
+                        <td> <b> Descrição </td> </b>
+                            <td> <b> Quantidade </td> </b>
+                                <td> <b> Valor </td> </b>
+                                    <td> <b> Dia </td> </b>
+                                        <td> <b> Nome da Loja </td> </b>
+                                            <td> <b> Ações </td> </b>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+                {% for itens in query %}
+                <tr>
+
+                    <td width="50">{{ itens._id }}</td>
+                    <td width="400">{{ itens.descricao }}</td>
+                    <td width="10">{{ itens.quantidade }}</td>
+                    <td>{{ itens.valor }}</td>
+                    <td>{{ itens.dia.strftime("%d/%m/%Y") }}</td>
+                    <td>{{ itens.nomeloja }}</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="{{ url_for('visualizar', ver_item=itens._id) }}">Visualizar</a>
+                        <a class="btn btn-dark btn-sm" href="{{ url_for('editar', item_id=itens._id) }}" method="POST">Editar</a>
+                     <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">
+  Excluir
+</button>
+
+                    </td>
+                </tr>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">❌ Excluir Item</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Você deseja realmente excluir este item?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Voltar</button>
+
+
+         <form action="{{ url_for('excluir', excluir_id=itens._id) }}" method="POST">
+              <input class="btn btn-danger btn-sm" type="submit" value="Sim">
+        </form>
+
+        
+      </div>
+    </div>
+  </div>
 </div>
 
-{% endblock content %}
 
-  
+
+
+
+
+
+
+
+
+
+
+
+
+
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+</div>
+</div>
+<!-- /#main -->
+
+
+
+
+
+
+{% endblock content %}

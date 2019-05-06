@@ -9,14 +9,14 @@
 
 .título {
 
-font-size: 16px
+font-size: 17px
 
 }
 
 .bg-rosa{
    background-color: #f8cccd;
+  
 }
-
 
 .btn-xl {
   padding: 1.25rem 2.5rem;
@@ -31,19 +31,12 @@ font-size: 16px
   font-size: 3rem;
 }
 
-.content-section-heading h3 {
-  font-size: 1rem;
+.content-section-heading h3, h4{
+  font-size: 18px;
+  font-family: Arial;
   text-transform: uppercase;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: 700;
-}
 
 .masthead {
   min-height: 30rem;
@@ -73,17 +66,17 @@ h6 {
 
 .cadastre-se  {
 
-text-align: right;
+font-weight: bold;
 font-family: Arial;
 font-size: 14px;
-
 
 }
 
 .registro {
 
-font-family: Times New Roman;
-font-size: 16px;
+
+font-family: Arial;
+font-size: 14px;
 margin-top:150px; 
 width: 500px;
 float: center;
@@ -132,4 +125,3 @@ margin: 0 auto;
 
 
 }
-

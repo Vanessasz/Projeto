@@ -1,13 +1,23 @@
-{% extends "layout.html" %}
+ {% extends "layout.html" %}
 {% block content %}
 
 <form method="POST" action="">
 	{{ form.hidden_tag() }}
 
-
 <br>
 <div class="registro borda-borda">
 
+
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
 
 <h4 class="borda-borda">Login</h4>
 
@@ -24,6 +34,7 @@
     </div>
   </div>
 
+
 <div class="form-group row">
     <label class="col-sm-4 col-form-label">Senha</label>
     <div class="col-sm-8">
@@ -36,30 +47,23 @@
     	{% endif %}
     </div>
   
-  
- 
 <div class="checkbox">
 	<label>
-
-		<div class="col-sm-12">
-        <br>
-		{{ form.lembrar_me(class="form_check_input") }}
-	   {{ form.lembrar_me.label(class="form_check_label") }}
-        </div>
-    </label>
-
+		<div class="col-lg-12">
+		<br>
+		{{ form.lembrar_me }} Lembrar-me
+	</label>
+   </div>
 </div>
 
 <div class="col-sm-12">
 <div class="titulo-salvar">
-
+    <br>
     {{ form.enviar(class="btn btn-success btn-block") }}
     </div>
     </div>
-
 </form>
 
 
+
 {% endblock content %}
-
-
