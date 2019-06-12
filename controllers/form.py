@@ -37,10 +37,12 @@ class LoginAdmin(FlaskForm):
 	senha = PasswordField('Digite sua senha',validators=[DataRequired()])
 	lembrar_me = BooleanField('Lembrar-me')	
 	enviar = SubmitField('Acessar')
-		
+	
 
 class SistemaBusca(Form):
-	choices = [('descricao', 'valor', 'nomeloja')]
-	select = SelectField('Pesquisar itens', choices=choices)
-	search = StringField('')
+	itens = [('descricao', 'quantidade', 'valor')]
+	select = SelectField('Pesquisar itens', itens=itens)
+	search = StringField('Faça sua Busca aqui')
 	enviar = SubmitField('Buscar')
+
+	

@@ -81,10 +81,21 @@
 </table>
 
 
+<div class="row">
+<div class="col-md-12">
+    <br>
+    <h6 class="text-left">Pesquisar itens</h6> </br>
+ <form action="SistemaBusca" class="navbar-pull-right">
+<input type="text" class="span2">
+<button class="btn btn-light btn-sm" href="{{ url_for('sistema') }}" method="GET">Buscar</button>
+</form>
+</div>
+ </div>
 
 <br>
 <div class="row">
     <div class="col-md-12">
+
         <br>
         <h4 class="page-header text-center">Visualizar estoque semi jóias</h4> </br>
 
@@ -178,9 +189,6 @@
 </div>
 <!-- /#main -->
 
-
-
-
-
+    
 
 {% endblock content %}

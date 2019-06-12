@@ -1,3 +1,7 @@
+
+import string
+from random import choice
+
 from Projeto import app, db #Aqui estou fazendo o importe da instância que eu criei.
 
 from Projeto.models import database
@@ -10,9 +14,12 @@ from flask_login import login_user, login_manager, current_user, logout_user, lo
 
 from Projeto.controllers.form import FormSistema, FormRegistro, FormLogin, LoginAdmin, SistemaBusca
 
+
 db.create_all()
 db.session.commit()
 
+conn = sqlite3.connect("bancodedados.db")
+cursor = conn.cursor()
 
 @app.route("/")
 @app.route("/home")
@@ -35,6 +42,8 @@ def sistema():
 	#form_busca = SistemaBusca()
 	#busca
 
+
+	
 	valores = 0
 
 	query = desc.query.filter_by(descricoes_id=current_user._id)
@@ -58,11 +67,14 @@ def sistema():
 
 		return redirect(url_for('sistema'))
 
-	return render_template('sistema.html', formulario=formulario, query=query)
+	return render_template('sistema.html', formulario=formulario, query=query) 
 
+def SistemaBusca():
+
+			
 
 @app.route("/registro", methods=['GET', 'POST'])
-def registro(): 
+def registro(): 	
 
 	form = FormRegistro()
 
@@ -99,6 +111,20 @@ def login():
             print(form.errors)          
             flash('Login inválido.', 'danger')
     return render_template('login.html', title='login', form=form)
+
+
+@app.route("/esqueceuasenha", methods=['GET', 'POST'])
+def esqueceuasenha():
+	
+	form = FormLogin()
+
+
+	size = 50
+	esqueceuasenha =''.join([choice(string.ascii_letters + string.digits) for i in range(size)])
+	print (esqueceuasenha)
+	flash('Uma senha foi enviada para o email cadastrado.' , 'success')
+	return redirect(url_for('login'))
+
 
 
 @app.route("/loginadmin", methods=['GET', 'POST'])
@@ -176,7 +202,8 @@ def excluir(excluir_id):
 	db.session.commit()
 	flash('Apagado com sucesso!', 'success')
 	return redirect(url_for('sistema', query_excluir = query_excluir))
-	
+
+
 
 @app.route("/minhaconta", methods=['GET', 'POST'])
 @login_required
@@ -207,7 +234,14 @@ def minhaconta():
 
 
 
+
+
+
+
+
 @app.route("/sair")
 def sair():
     logout_user()
     return redirect(url_for('home'))
+
+			

@@ -86,3 +86,8 @@ class desc(db.Model):
 	
 	def __repr__(self):
 		return f"desc('{self.descricao}', '{self.quantidade}','{self.valor}','{self.dia}','{self.nomeloja}')"
+
+
+
+
+       

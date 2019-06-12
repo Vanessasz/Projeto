@@ -1,65 +1,66 @@
-{% extends "layout.html" %}
-{% block content %}
+{% extends "layout.html" %} {% block content %}
 
 <form method="POST" action="">
-	{{ form.hidden_tag() }}
+    {{ form.hidden_tag() }}
 
+    <br>
+    <div class="registro borda-borda">
 
-<br>
-<div class="registro borda-borda">
+        <h4 class="borda-borda">Login</h4>
 
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Email</label>
+            <div class="col-sm-8">
 
-<h4 class="borda-borda">Login</h4>
-
- <div class="form-group row">
-    <label class="col-sm-4 col-form-label">Email</label>
-    <div class="col-sm-8">
-     
-    	{{ form.email(class="form-control form-control-sm") }}
-    	{% if form.errors.email %}
-    	<div class="alert alert-danger" role="alert">
-    		{{ form.errors.email }}
-		</div>
-    	{% endif %}
-    </div>
-  </div>
-
-<div class="form-group row">
-    <label class="col-sm-4 col-form-label">Senha</label>
-    <div class="col-sm-8">
-     
-    	{{ form.senha(class="form-control form-control-sm") }}
-    	{% if form.errors.senha %}
-    	<div class="alert alert-danger" role="alert">
-    		{{ form.errors.senha }}
-    	</div>
-    	{% endif %}
-    </div>
-  
-  
- 
-<div class="checkbox">
-	<label>
-
-		<div class="col-sm-12">
-        <br>
-		{{ form.lembrar_me(class="form_check_input") }}
-	   {{ form.lembrar_me.label(class="form_check_label") }}
+                {{ form.email(class="form-control form-control-sm") }} {% if form.errors.email %}
+                <div class="alert alert-danger" role="alert">
+                    {{ form.errors.email }}
+                </div>
+                {% endif %}
+            </div>
         </div>
-    </label>
 
-</div>
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Senha</label>
+            <div class="col-sm-8">
 
-<div class="col-sm-12">
-<div class="titulo-salvar">
+                {{ form.senha(class="form-control form-control-sm") }} {% if form.errors.senha %}
+                <div class="alert alert-danger" role="alert">
+                    {{ form.errors.senha }}
+                </div>
+                {% endif %}
+            </div>
 
-    {{ form.enviar(class="btn btn-success btn-block") }}
+            <div class="checkbox">
+                <label>
+
+                    <div class="col-sm-12">
+                        <br> {{ form.lembrar_me(class="form_check_input") }} {{ form.lembrar_me.label(class="form_check_label") }}
+                    </div>
+                </label>
+
+            </div>
+
+            <div class="col-sm-12">
+                <div class="titulo-salvar">
+                    <div class="form-group">
+                        {{ form.enviar(class="btn btn-success btn-block") }}
+                        <br>
+                        <small class="text-dark">
+                <a href="{{ url_for('esqueceuasenha') }}">Esqueceu sua senha</a>
+
+            </small>
+                    </div>
+                    <div class="center">
+                        <small class="text-dark">
+            Não tem uma conta? <a class="ml-2" href="{{ url_for('registro') }}">Crie agora</a>
+        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    </div>
-
 </form>
 
 
 {% endblock content %}
-
-
