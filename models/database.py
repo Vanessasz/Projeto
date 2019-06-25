@@ -1,93 +1,67 @@
+from datetime import datetime
+
+
 from Projeto import app, db, login_manager
-from flask_login import UserMixin
+
+from flask_user import UserMixin
 
 from flask_login import login_user
 
+from flask_user import login_required, roles_required, UserManager, SQLAlchemyAdapter
+
+
 @login_manager.user_loader
 def load_user(descricoes_id):
-	return loja.query.get(int(descricoes_id))
+	return Administrador.query.get(int(descricoes_id))
 
-
-class administrador(db.Model, UserMixin):
+class Administrador(db.Model, UserMixin):
 	__tablename__ = "admin"
 
-	_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-	nome = db.Column(db.String, nullable=False)
-	email = db.Column(db.String, unique=True)
-	senha = db.Column(db.String, nullable=False)
-
-	@property
-	def is_authenticated(self):
-		return True
-
-	@property
-	def is_active(self):
-		return True
-
-	@property
-	def is_anonymous(self):
-		return False 
-
 	def get_id(self):
-		return str(self._id)
-	
-	def __init__(self, nome, email, senha):
-		self.nome = nome
-		self.email = email
-		self.senha = senha
-
-
-class loja(db.Model, UserMixin):
-	__tablename__= "lojas"
+		return (self._id)
 
 	_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-	nome = db.Column(db.String, nullable=False)
-	telefone = db.Column(db.String, nullable=False)
-	cnpj = db.Column(db.String, nullable=False)
-	email = db.Column(db.String, unique=True)
-	senha = db.Column(db.String, nullable=False)
-	
-	@property
-	def is_authenticated(self):
-		return True
-
-	@property
-	def is_active(self):
-		return True
-
-	@property
-	def is_anonymous(self):
-		return False 
-
-	def get_id(self):
-		return str(self._id)
-	
-	
-	def __init__(self, nome, telefone, cnpj, email, senha):
-		self.nome = nome
-		self.telefone = telefone
-		self.cnpj = cnpj
-		self.email = email
-		self.senha = senha
+	nome = db.Column(db.String(30), nullable=False)
+	email = db.Column(db.String(45), unique=True, nullable=False)
+	senha = db.Column(db.String(45), nullable=False)
+	roles = db.relationship('Role', secondary='user_roles', backref=db.backref('users', lazy='dynamic'))
 
 
-class desc(db.Model):
+	def __repr__(self):
+		return f"admin('{self.nome}', '{self.email}', '{self.email}')"
+
+    # Relationships
+    
+#Classes que registram as regras para os usuarios
+#Administrador ou Usuário comum
+class Role(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(50), unique=False)
+
+# Define the UserRoles data model
+class UserRoles(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column(db.Integer(), db.ForeignKey('admin._id', ondelete='CASCADE'))
+    role_id = db.Column(db.Integer(), db.ForeignKey('role.id', ondelete='CASCADE'))
+
+db_adapter = SQLAlchemyAdapter(db,  Administrador)
+user_manager = UserManager(db_adapter, app)
+
+
+class Desc(db.Model):
 	__tablename__= "descricoes"
+
+	def get_id(self):
+		return (self._id)
 
 	_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	descricao = db.Column(db.String, nullable=False)
 	quantidade = db.Column(db.Integer, nullable=False)
 	valor = db.Column(db.Float, nullable=False)
-	dia = db.Column(db.Date, nullable=False) 
-	nomeloja = db.Column(db.String, nullable=False)
+	dia = db.Column(db.String, nullable=False) 
+	nomeloja = db.Column(db.String, nullable=True)
 	
-	descricoes_id = db.Column(db.Integer, db.ForeignKey('lojas._id'), nullable=False) # Chave estrangeira
-
+	descricoes_id = db.Column(db.Integer, db.ForeignKey('admin._id'), nullable=False) # Chave estrangeira
 	
 	def __repr__(self):
-		return f"desc('{self.descricao}', '{self.quantidade}','{self.valor}','{self.dia}','{self.nomeloja}')"
-
-
-
-
-       
+		return f"descricoes('{self.descricao}', '{self.quantidade}','{self.valor}','{self.dia}','{self.nomeloja}')"
