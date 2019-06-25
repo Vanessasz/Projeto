@@ -1,0 +1,188 @@
+ {% extends "layout.html" %} 
+ {% block content %}
+
+
+
+
+<div class="container-fluid">
+
+    <h4 class="text-center">Adicionar semi jóias</h4>
+    <br>
+
+    <table class="container-fluid">
+        <thead>
+            <tr>
+                <th class="text-center">
+                    Descrição
+                </th>
+                <th class="text-center">
+                    Quantidade
+                </th>
+                <th class="text-center">
+                    Valor Unitário
+                </th>
+                <th class="text-center">
+                    Data
+                </th>
+                <th class="text-center">
+                    Nome da Loja
+                </th>
+            </tr>
+        </thead>
+
+<form action="" method="post" class="form" role="form">
+  {{ form.csrf_token() }}
+
+
+        <tbody>
+                <div class="row">
+
+                    <tr>
+                        <td>
+                            <div class="form col-sm">
+                                {{ form.descricao(class="form-control form-control-sm") }}
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="form col-sm">
+                                {{ form.quantidade(class="form-control form-control-sm") }}
+                            </div>
+                        </td>
+                        <div class="form col-sm">
+                            <td>
+                                {{ form.valor(class="form-control form-control-sm") }}
+                            </td>
+                        </div>
+
+                        <td>
+                            <div class="form col-sm">
+                                {{ form.dia(class="form-control form-control-sm") }}
+
+                            </div>
+                        </td>
+                        <td>
+                                
+                            <select name="seletor_loja" method="GET" class="custom-select custom-select-sm">
+                                 <option selected>Selecione a Loja</option>
+                                {% for seletor_loja in lista_teste[1:] %}
+                             
+                              <option value="{{seletor_loja}}">{{ seletor_loja[2:] }}</option>
+                                {% endfor %}
+
+                            </select>
+                        </td>
+
+                        <td>
+                            {{ form.enviar(class="btn btn-success btn-sm m-2") }}
+
+                        </td>
+                        <td> <a class="btn btn-danger btn-sm m-2" href="{{ url_for('sistema_admin') }}">Cancelar</a>
+                        </td>
+                    </tr>
+                   
+                </div>    
+    
+    </form>
+</table>
+
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+
+            <br>
+            <h4 class="page-header text-center">Visualizar estoque semi jóias</h4> </br>
+
+            <table class="table table-bordered table-sm">
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td> <b> Descrição </b></td>
+                        <td> <b> Quantidade  </b></td>
+                        <td> <b> Valor Unitário  </b></td>
+                        <td> <b> Data </b></td>
+                        <td> <b> Nome da Loja </b></td>
+                        <td> <b> Ações  </b></td>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                    {% for itens in query %}
+                    <tr>
+
+                        <td width="50"></td>
+                        <td width="400">{{ itens.descricao }}</td>
+                        <td width="100">{{ itens.quantidade }}</td>
+                         <td width="100">{{"R$ {:,.2f}".format(itens.valor) }}</td>  
+                      
+                        <td width="100">{{ itens.dia }}</td>
+                        <td width="300">{{ itens.nomeloja }}</td>
+
+                        <td width="300">
+                            <a class="btn btn-primary btn-sm" href="{{ url_for('visualizar', ver_item=itens._id) }}">Visualizar</a>
+                            <a class="btn btn-dark btn-sm" href="{{ url_for('editar', item_id=itens._id) }}" method="POST">Editar</a>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">
+                                Excluir
+                            </button>
+
+                        </td>
+                    </tr>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">❌ Excluir Item</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Você deseja realmente excluir este item?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Voltar</button>
+
+                                    <form action="{{ url_for('excluir', excluir_id=itens._id) }}" method="POST">
+                                        <input class="btn btn-danger btn-sm" type="submit" value="Sim">
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+            <table class="table table-sm">
+                <tbody>
+                    <tr>
+                        <td width="50">Totais</td>
+                        <td width="400"> </td>
+                        <td width="100"> {{ soma_itens }} </td>
+                        <td width="100"> {{ "R$ {:,.2f}".format(soma_total)}} </td> 
+                        
+                        <td width="100"> </td>
+
+                        <td width="300"> </td>
+                        <td width="300"> </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+            <br>
+
+        </div>
+
+        <!-- /#main -->
+
+        {% endblock content %}
