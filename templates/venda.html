@@ -1,15 +1,15 @@
  {% extends "layout.html" %} {% block content %}
 
 <div class="container-fluid">
-
+<br>
     <h4 class="text-center">vender semi jóias</h4>
     <br>
 
-    <table class="container-fluid">
+    <table class="container">
         <thead>
             <tr>
                 <th class="text-center">
-                    Quantidade
+                    Quantidade Vendida
                 </th>
             </tr>
         </thead>
@@ -25,11 +25,8 @@
 {{ form.dia(class="form-control form-control-sm", type="hidden") }}
 {{ form.nomeloja(class="form-control form-control-sm", type="hidden") }}
 
-
-
                     <tr>
-
-                        <td>
+                        <td width="200">
                             <div class="form col-sm">
                                 {{ form.quantidade(class="form-control form-control-sm") }}
                             </div>
@@ -37,9 +34,7 @@
 
                         <td>
                             {{ form.enviar(class="btn btn-success btn-sm m-2") }}
-
-                        </td>
-            <td> <a class="btn btn-danger btn-sm m-2" href="{{ url_for('sistema') }}">Cancelar</a>
+                             <a class="btn btn-danger btn-sm m-2" href="{{ url_for('sistema') }}">Cancelar</a>
                         </td>
                     </tr>
                 </div>

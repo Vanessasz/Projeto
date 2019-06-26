@@ -45,6 +45,6 @@ class SistemaBusca(Form):
 	search = StringField('Faça sua Busca aqui')
 	enviar = SubmitField('Buscar')
 
-class Formvenda(FlaskForm):
+class FormVenda(FlaskForm):
 	quantidade = IntegerField('Quantidade', validators=[DataRequired()])
 	enviar = SubmitField('Vender')

@@ -1,8 +1,8 @@
 
 from Projeto import app, db #Aqui estou fazendo o importe da instância que eu criei.
 
-#from Projeto.models import database
 from Projeto.models.database import Desc, Administrador, Role, UserRoles
+from Projeto.controllers.form import FormSistema, FormRegistro, FormLogin, LoginAdmin, SistemaBusca
 
 from flask import render_template, url_for, flash, redirect, request, abort, send_file, Markup
 from flask_sqlalchemy import SQLAlchemy
@@ -10,8 +10,6 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
 
 from flask_user import current_user, login_required, roles_required, UserManager
-
-from Projeto.controllers.form import FormSistema, FormRegistro, FormLogin, LoginAdmin, SistemaBusca
 
 from flask_login import login_user, login_manager, logout_user
 
@@ -24,7 +22,6 @@ from collections import namedtuple
 def home():
     """ Essa função renderiza a página principal """
     
-
     return render_template('home.html')
 
 #Rota para o admin
@@ -40,19 +37,6 @@ def sistema_admin():
     for u in db.session.query(Administrador).all():
        
        lista_teste.append(str(u._id) + '  ' + u.nome)
-
-
-    ##########################################################
-    '''
-    lojas_cadastradas = db.session.query(Administrador.nome).all()
-    
-    lista_loja = []
-
-    lista_loja = [x[0] for x in lojas_cadastradas]
-
-    print('LISTA LOJA',lista_loja)
-    '''
-    ##########################################################3
 
     form = FormSistema()
     
@@ -112,19 +96,20 @@ def sistema():
     #Defini uma função para essa página
     form = FormSistema()
     """ Instanciei meu formulário para poder usar """
-    #form_busca = SistemaBusca()
-    #busca
 
     #Query para as somas
+    #Concatenar tabelas no sqlalchemy retorna tuplas, e tuplas e são imutáveis
+    #Por isso a necessidade de converter para string, remover ruídos e passar para int
     soma_itens = db.session.query(func.sum(Desc.quantidade)).filter_by(descricoes_id=current_user._id)
     soma_itens_conversor = str(soma_itens[0])
     soma_itens_conversor = soma_itens_conversor[1:-2]
     soma_itens_final = int(soma_itens_conversor)
 
-
-
     soma_valores = db.session.query(func.sum(Desc.valor)).filter_by(descricoes_id=current_user._id)
 
+    #Query para os totais
+    #Concatenar tabelas no sqlalchemy retorna tuplas, e tuplas e são imutáveis
+    #Por isso a necessidade de converter para string, remover ruídos e passar para int
     soma_total = db.session.query(func.sum(Desc.valor * Desc.quantidade)).filter_by(descricoes_id=current_user._id)#filter_by(descricoes_id=current_user._id)   
     soma_total_conversor  = str(soma_total[0])
     soma_total_conversor = soma_total_conversor[1:-2]
@@ -149,8 +134,8 @@ def registro():
         valores = Administrador(nome=form.nome.data, email=form.email.data, senha=form.senha.data)
 
         db.session.add(valores)
+        #Usuario comum recebe a regra de usuário
         regra = Role(name='user')
-        #regra = UserRoles(role_id=2)
         valores.roles.append(regra)
 
         db.session.commit()
@@ -158,7 +143,6 @@ def registro():
         return redirect(url_for('login'))
 
     return render_template('registro.html', title='Register', form=form)
-
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -186,7 +170,6 @@ def login():
 @app.route("/loginadmin", methods=['GET', 'POST'])
 def loginadmin():
 
-    
 
     form = LoginAdmin()
 
@@ -277,8 +260,6 @@ def vender(vender_id):
 
     query_venda = Desc.query.get_or_404(vender_id)
 
-    #query_venda = Desc.query.get_or_404(vender_id)
-
     if form.validate_on_submit():
         valor = 0
         
@@ -298,7 +279,6 @@ def vender(vender_id):
     elif request.method == 'GET':
 
         form.descricao.data = query_venda.descricao
-        #form.quantidade.data = query_editar.quantidade
         form.valor.data = query_venda.valor
         form.dia.data = query_venda.dia
         form.nomeloja.data = query_venda.nomeloja
