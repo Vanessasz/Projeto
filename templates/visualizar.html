@@ -9,7 +9,7 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th scope="col"># ID</th>
+                        
                         <th scope="col">Descrição</th>
                         <th scope="col">Quantidade</th>
                         <th scope="col">Valor</th>
@@ -19,7 +19,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <th scope="row">{{ query._id }}</th>
+                        
                         <td>{{ query.descricao }}</td>
                         <td>{{ query.quantidade }}</td>
                         <td>{{ query.valor }}</td>
@@ -32,6 +32,27 @@
 
             </table>
         
+
+<table class="table table-sm">
+     <tbody>
+         <tr>
+{% for itens in query %}
+
+               <td width="50">Totais</td>
+                    <td width="400"> </td>
+                    <td width="100"> {{ itens }} </td>
+                    <td width="100"> </td>
+                    <td width="100"> </td>
+                    
+                    <td width="300"> </td> 
+                     <td width="300"> </td>        
+         </tr>
+{% endfor %}
+     </tbody>
+
+ </table>
+
+
 
     <div class="row">
         <div class="col-md-12">

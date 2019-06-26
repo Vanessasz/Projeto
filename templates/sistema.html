@@ -1,194 +1,78 @@
  {% extends "layout.html" %} {% block content %}
 
-<div class="container-fluid">
+<div class="container">
 
-
-    <h4 class="text-center">Adicionar semi jóias</h4>
+    <h4 class="text-center">Vender semi jóias</h4>
     <br>
 
-<table class="container-fluid">
-    <thead>
-        <tr>
-            <th class="text-center">
-                Descrição
-            </th>
-            <th class="text-center">
-                Quantidade
-            </th>
-            <th class="text-center">
-                Valor
-            </th>
-            <th class="text-center">
-                Dia
-            </th>
-            <th class="text-center">
-                Nome da Loja
-            </th>
-        </tr>
-    </thead>
 
-    <tbody>
+    <br>
+    <div class="row">
+        <div class="col-md-12">
 
-        <form method="POST" action="">
-            {{ formulario.hidden_tag() }}
-            <div class="row">
+            <br>
+        
 
-                <tr>
-                    <td>
-                        <div class="form col-sm">
-                            {{ formulario.descricao(class="form-control form-control-sm") }}
-                        </div>
-                    </td>
+            <table class="table table-bordered table-sm">
+                <thead>
+                    <tr>
 
-                    <td>
-                        <div class="form col-sm">
-                            {{ formulario.quantidade(class="form-control form-control-sm") }}
-                        </div>
-                    </td>
-                    <div class="form col-sm">
-                        <td>
-                            {{ formulario.valor(class="form-control form-control-sm") }}
+                        <td> <b> Descrição </b></td>
+                        <td> <b> Quantidade </b> </td>
+                        <td> <b> Valor Unitário </b></td>
+                        <td> <b> Data </b> </td>
+
+                        <td> <b> Ações </b></td>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                    {% for itens in query %}
+                    <tr>
+
+                        <td width="400">{{ itens.descricao }}</td>
+                        <td width="100">{{ itens.quantidade }}</td>
+                        <td width="200">R$ {{ "{:,.2f}".format(itens.valor)}} </td> 
+                       
+
+                        <td width="100">{{ itens.dia }}</td>
+
+                     
+
+    <td> <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('vender',vender_id=itens._id) }}" method="POST">Vender</a></td>
+
                         </td>
-                    </div>
+                    </tr>
 
-                    <td>
-                        <div class="form col-sm">
-                            {{ formulario.dia(class="form-control form-control-sm") }}
+                    {% endfor %}
 
-                        </div>
-                    </td>
-                    <td>
-                        <div class="form col-sm">
-                            {{ formulario.nomeloja(class="form-control form-control-sm") }}
+                </tbody>
+            </table>
 
-                        </div>
-                    </td>
+            <table class="table table-sm">
+                <tbody>
+                    <tr>
+                        <td width="50">Totais</td>
+                        <td width="400"> </td>
+                        <td width="100"> {{ soma_itens_final }} </td>
+                        <td width="200">{{  "R$ {:,.2f}".format(soma_total_final) }}</td> 
+                        
+                        <td width="100"> </td>
 
-                    <td>
-                        {{ formulario.enviar(class="btn btn-success btn-sm m-2") }}
+                        <td width="380"> </td>
 
-                    </td>
-                    <td> <a class="btn btn-danger btn-sm m-2" href="{{ url_for('home') }}">Cancelar</a>
-                    </td>
-                </tr>
-            </div>
-        
+                    </tr>
 
+                </tbody>
 
-        </form>
+            </table>
 
-    </tbody>
-</table>
+            <br>
 
+        </div>
 
-<div class="row">
-<div class="col-md-12">
-    <br>
-    <h6 class="text-left">Pesquisar itens</h6> </br>
- <form action="SistemaBusca" class="navbar-pull-right">
-<input type="text" class="span2">
-<button class="btn btn-light btn-sm" href="{{ url_for('sistema') }}" method="GET">Buscar</button>
-</form>
-</div>
- </div>
+        <!-- /#main -->
 
-<br>
-<div class="row">
-    <div class="col-md-12">
-
-        <br>
-        <h4 class="page-header text-center">Visualizar estoque semi jóias</h4> </br>
-
-        <table class="table table-bordered table-sm">
-            <thead>
-                <tr>
-                    <td> <b> ID </td> </b>
-                        <td> <b> Descrição </td> </b>
-                            <td> <b> Quantidade </td> </b>
-                                <td> <b> Valor </td> </b>
-                                    <td> <b> Dia </td> </b>
-                                        <td> <b> Nome da Loja </td> </b>
-                                            <td> <b> Ações </td> </b>
-
-                </tr>
-
-            </thead>
-
-            <tbody>
-                {% for itens in query %}
-                <tr>
-
-                    <td width="50">{{ itens._id }}</td>
-                    <td width="400">{{ itens.descricao }}</td>
-                    <td width="10">{{ itens.quantidade }}</td>
-                    <td>{{ itens.valor }}</td>
-                    <td>{{ itens.dia.strftime("%d/%m/%Y") }}</td>
-                    <td>{{ itens.nomeloja }}</td>
-                    <td>
-                        <a class="btn btn-primary btn-sm" href="{{ url_for('visualizar', ver_item=itens._id) }}">Visualizar</a>
-                        <a class="btn btn-dark btn-sm" href="{{ url_for('editar', item_id=itens._id) }}" method="POST">Editar</a>
-                     <!-- Button trigger modal -->
-                      <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">
-  Excluir
-</button>
-
-                    </td>
-                </tr>
-
-
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">❌ Excluir Item</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Você deseja realmente excluir este item?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Voltar</button>
-
-
-         <form action="{{ url_for('excluir', excluir_id=itens._id) }}" method="POST">
-              <input class="btn btn-danger btn-sm" type="submit" value="Sim">
-        </form>
-
-        
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                {% endfor %}
-
-            </tbody>
-        </table>
-
-    </div>
-</div>
-</div>
-</div>
-<!-- /#main -->
-
-    
-
-{% endblock content %}
+        {% endblock content %}
