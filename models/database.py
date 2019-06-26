@@ -12,23 +12,23 @@ from flask_user import login_required, roles_required, UserManager, SQLAlchemyAd
 
 @login_manager.user_loader
 def load_user(descricoes_id):
-	return Administrador.query.get(int(descricoes_id))
+    return Administrador.query.get(int(descricoes_id))
 
 class Administrador(db.Model, UserMixin):
-	__tablename__ = "admin"
+    __tablename__ = "admin"
 
-	def get_id(self):
-		return (self._id)
+    def get_id(self):
+        return (self._id)
 
-	_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-	nome = db.Column(db.String(30), nullable=False)
-	email = db.Column(db.String(45), unique=True, nullable=False)
-	senha = db.Column(db.String(45), nullable=False)
-	roles = db.relationship('Role', secondary='user_roles', backref=db.backref('users', lazy='dynamic'))
+    _id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    nome = db.Column(db.String(30), nullable=False)
+    email = db.Column(db.String(45), unique=True, nullable=False)
+    senha = db.Column(db.String(45), nullable=False)
+    roles = db.relationship('Role', secondary='user_roles', backref=db.backref('users', lazy='dynamic'))
 
 
-	def __repr__(self):
-		return f"admin('{self.nome}', '{self.email}', '{self.email}')"
+    def __repr__(self):
+        return f"admin('{self.nome}', '{self.email}', '{self.email}')"
 
     # Relationships
     
@@ -37,6 +37,23 @@ class Administrador(db.Model, UserMixin):
 class Role(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(50), unique=False)
+
+    @property
+    def has_roles(self):
+        admin = 'admin'
+        user = 'user'
+        guest = has_holes('guest')
+
+        if name == 'admin':
+            return self.admin
+        elif name == 'user':
+            return self.user
+        else:
+            return self.guest 
+
+    @property
+    def is_anonymous(self):
+        return False 
 
 # Define the UserRoles data model
 class UserRoles(db.Model):
@@ -49,19 +66,19 @@ user_manager = UserManager(db_adapter, app)
 
 
 class Desc(db.Model):
-	__tablename__= "descricoes"
+    __tablename__= "descricoes"
 
-	def get_id(self):
-		return (self._id)
+    def get_id(self):
+        return (self._id)
 
-	_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-	descricao = db.Column(db.String, nullable=False)
-	quantidade = db.Column(db.Integer, nullable=False)
-	valor = db.Column(db.Float, nullable=False)
-	dia = db.Column(db.String, nullable=False) 
-	nomeloja = db.Column(db.String, nullable=True)
-	
-	descricoes_id = db.Column(db.Integer, db.ForeignKey('admin._id'), nullable=False) # Chave estrangeira
-	
-	def __repr__(self):
-		return f"descricoes('{self.descricao}', '{self.quantidade}','{self.valor}','{self.dia}','{self.nomeloja}')"
+    _id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    descricao = db.Column(db.String, nullable=False)
+    quantidade = db.Column(db.Integer, nullable=False)
+    valor = db.Column(db.Float, nullable=False)
+    dia = db.Column(db.String, nullable=False) 
+    nomeloja = db.Column(db.String, nullable=True)
+    
+    descricoes_id = db.Column(db.Integer, db.ForeignKey('admin._id'), nullable=False) # Chave estrangeira
+    
+    def __repr__(self):
+        return f"descricoes('{self.descricao}', '{self.quantidade}','{self.valor}','{self.dia}','{self.nomeloja}')"

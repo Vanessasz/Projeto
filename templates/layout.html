@@ -11,6 +11,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='estrutura.css') }}">
 
     <title>Jóia Lar.</title>
+
+     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
 </head>
 
 <body>
@@ -52,17 +54,27 @@
         <div class="collapse navbar-collapse" id="textoNavbar">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for('home') }}">Página Inicial<span class="sr-only">(Página atual)</span></a>
+
+            <a class="nav-link" href="{{ url_for('home') }}">Página Inicial<span class="sr-only">(Página atual)</span></a>
                 </li>
+
+
+
+          
+
+
+
                 <li class="nav-item">
+  {% if current_user.is_authenticated %}
+
+   {% else %}                 
                     <a class="nav-link" href="{{ url_for('sistema') }}">Cadastrar produtos</a></li>
                 <a class="nav-link" href="{{ url_for('loginadmin') }}">Login administrador</a>
-
+            {% endif %}
             </ul>
         </div>
     </nav>
-    <br>
-    <div class="container">
+      <div class="container">
         <div class="row">
             <div class="col-md-4">
 

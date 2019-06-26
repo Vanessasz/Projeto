@@ -21,53 +21,45 @@
             <th class="text-center">
                 Dia
             </th>
-            <th class="text-center">
-                Nome da Loja
-            </th>
+            
         </tr>
     </thead>
 
     <tbody>
 
  <form method="POST" action="">
-            {{ formulario.hidden_tag() }}
+            {{ form.hidden_tag() }}
             <div class="row">
 
                 <tr>
                     <td>
                         <div class="form col-sm">
-                            {{ formulario.descricao(class="form-control form-control-sm") }}
+                            {{ form.descricao(class="form-control form-control-sm") }}
                         </div>
                     </td>
 
                     <td>
                         <div class="form col-sm">
-                            {{ formulario.quantidade(class="form-control form-control-sm") }}
+                            {{ form.quantidade(class="form-control form-control-sm") }}
                         </div>
                     </td>
                     <div class="form col-sm">
                         <td>
-                            {{ formulario.valor(class="form-control form-control-sm") }}
+                            {{ form.valor(class="form-control form-control-sm") }}
                         </td>
                     </div>
 
                     <td>
                         <div class="form col-sm">
-                            {{ formulario.dia(class="form-control form-control-sm") }}
+                            {{ form.dia(class="form-control form-control-sm") }}
 
                         </div>
                     </td>
-                    <td>
-                        <div class="form col-sm">
-                            {{ formulario.nomeloja(class="form-control form-control-sm") }}
-                        </div>
+                   
 
+                    <td>
+                        {{ form.enviar(class="btn btn-success btn-sm m-2") }}
                         
-                    </td>
-
-                    <td>
-                        {{ formulario.enviar(class="btn btn-success btn-sm m-2") }}
-
                     </td>
                     <td> <a class="btn btn-danger btn-sm m-2" href="{{ url_for('sistema') }}">Cancelar</a>
                     </td>

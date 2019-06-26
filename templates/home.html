@@ -1,10 +1,30 @@
 {% extends "layout.html" %}
 {% block content %}
 <!-- Header -->
-    <header class="masthead d-flex">
+<style type="text/css">
+  
+
+.fundo{
+
+  background: -webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, 0.1)), to(rgba(255, 255, 255, 0.1))), url("../static/fundo.jpg");
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 50%), url("../static/fundo.jpg");
+  background-position: center center;
+  background-repeat: repeat;
+  background-size: stretch;
+
+}
+
+.cor-branca{
+  color: #ffffff;
+ 
+}
+
+</style>
+
+    <header class="fundo masthead d-flex fundo">
       <div class="container text-center my-auto">
         <h1 class="mb-1">Jóia Lar</h1>
-        <h3 class="mb-5">
+        <h3 class="mb-5 cor-branca">
           <em>Sistema para controle de semi jóias, totalmente online. </em>
         </h3>
         <a class="btn btn-dark btn-xl" href="#">Saiba mais</a>
